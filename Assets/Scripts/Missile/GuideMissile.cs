@@ -9,7 +9,18 @@ public class GuideMissile : Missiles
     [SerializeField]float rotSpeed = 2f;
     float rotateAmount;
 
-    bool isEnemy = false;
+    bool _isEnemy = false;
+
+    public bool isEnemy
+    {
+        get { return _isEnemy; }
+        set
+        {
+            _isEnemy = value;
+            if(_isEnemy == false)
+                DestroyMissile();
+        }
+    }
     Quaternion rotTarget;
   //  Vector3 dir;
     Rigidbody2D rb;
@@ -17,22 +28,21 @@ public class GuideMissile : Missiles
     // Start is called before the first frame update
     void Start()
     {
-       
-        rb = GetComponent<Rigidbody2D>();
+       rb = GetComponent<Rigidbody2D>();
         try
         {
             target = GameObject.Find("Enemy").transform;
             isEnemy = true;
         }
         catch { isEnemy = false;  }
-       
-    }
+     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         GuidedMissile();
     }
+    
     void GuidedMissile()
     {
         
@@ -58,12 +68,17 @@ public class GuideMissile : Missiles
             Health health = col.gameObject.GetComponent<Health>();
             health?.TakeDamage(damage);
             //TODO consider Object Pooling here!
-            GameObject g = Instantiate(explosion, this.transform.position, Quaternion.identity);
-            Destroy(gameObject);
-           
-            Destroy(g, 0.5f);
-            Debug.Log("hit");
+            DestroyMissile();
 
         }
+    }
+
+    private void DestroyMissile()
+    {
+        GameObject g = Instantiate(explosion, this.transform.position, Quaternion.identity);
+        Destroy(gameObject);
+           
+        Destroy(g, 0.5f);
+        Debug.Log("hit");
     }
 }
