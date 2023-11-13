@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "RaccoonSO/raccoons",fileName = "RaccoonSO")]
-public class RacoonsObject : ScriptableObject
+public class RaccoonSO : ScriptableObject
 {
     public List<Raccoons> RaccoonsList;
 }
