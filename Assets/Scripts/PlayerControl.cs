@@ -32,18 +32,22 @@ public class PlayerControl : MonoBehaviour
     }
     private void LateUpdate()
     {
-        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position); //Ä³¸¯ÅÍÀÇ ¿ùµå ÁÂÇ¥¸¦ ºäÆ÷Æ® ÁÂÇ¥°è·Î º¯È¯ÇØÁØ´Ù.
-        viewPos.x = Mathf.Clamp01(viewPos.x); //x°ªÀ» 0ÀÌ»ó, 1ÀÌÇÏ·Î Á¦ÇÑÇÑ´Ù.
-        viewPos.y = Mathf.Clamp01(viewPos.y); //y°ªÀ» 0ÀÌ»ó, 1ÀÌÇÏ·Î Á¦ÇÑÇÑ´Ù.
-        Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewPos); //´Ù½Ã ¿ùµå ÁÂÇ¥·Î º¯È¯ÇÑ´Ù.
-        transform.position = worldPos; //ÁÂÇ¥¸¦ Àû¿ëÇÑ´Ù.
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position); //Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½Ø´ï¿½.
+        viewPos.x = Mathf.Clamp01(viewPos.x); //xï¿½ï¿½ï¿½ï¿½ 0ï¿½Ì»ï¿½, 1ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+        viewPos.y = Mathf.Clamp01(viewPos.y); //yï¿½ï¿½ï¿½ï¿½ 0ï¿½Ì»ï¿½, 1ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+        Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewPos); //ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½.
+        transform.position = worldPos; //ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     }
     IEnumerator Shoot()
     {
         GameObject[] gs;
         for(int i = 0; i < spawnPoint.Length; i++)
         {
-            Instantiate(bullet, spawnPoint[i].position, Quaternion.identity);
+           GameObject temp =  Instantiate(bullet, spawnPoint[i].position, Quaternion.identity);
+           Vector3 direction = new Vector2(Mathf.Cos((20+20*i)*Mathf.Deg2Rad), Mathf.Sin((20+20*i)*Mathf.Deg2Rad));
+
+           temp.transform.right = direction;
+           temp.transform.position = spawnPoint[i].position + direction;
         }
         Instantiate(bullet2, spawnPoint2.position, Quaternion.identity);
       //  GameObject g = Instantiate(bullet, spawnPoint.position, Quaternion.identity);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,16 @@ public class TriMis : Missiles
         rb = GetComponent<Rigidbody2D>();
 
     }
+
+    private void Start()
+    {
+        Vector2 dir = transform.right;
+        rb.AddForce(dir * speed,ForceMode2D.Impulse);
+    }
+
     private void Update()
     {
-        rb.AddForce(new Vector2(0, speed),ForceMode2D.Impulse);
+       // rb.AddForce(new Vector2(0, speed),ForceMode2D.Impulse);
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
